@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.8.0](https://github.com/GersonRS/modern-gitops-stack-module-minio/compare/v2.7.0...v2.8.0) (2026-01-26)
+
+
+### 🚀 New Features
+
+* adjust workflow ([95179e8](https://github.com/GersonRS/modern-gitops-stack-module-minio/commit/95179e84f29cdc98c8487237ae0eb430fe9afa09))
+* update chart ([6c2bf43](https://github.com/GersonRS/modern-gitops-stack-module-minio/commit/6c2bf4351a2216d53499713d9f4224d34daba345))
+* update the things ([6a184cd](https://github.com/GersonRS/modern-gitops-stack-module-minio/commit/6a184cd71759b42dab89aaf573a12822d4ba00e9))
+
 ## [2.7.0](https://github.com/GersonRS/modern-gitops-stack-module-minio/compare/v2.6.2...v2.7.0) (2025-10-20)
 
 
