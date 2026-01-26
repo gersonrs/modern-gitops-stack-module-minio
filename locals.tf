@@ -1,5 +1,5 @@
 locals {
-  domain = format("minio.%s", trimprefix("${var.subdomain}.${var.base_domain}", "."))
+  domain = "minio.${var.subdomain != "" ? "${trimprefix(var.subdomain, ".")}." : ""}${var.base_domain}"
 
   self_signed_cert = {
     extraVolumeMounts = [
@@ -39,7 +39,7 @@ locals {
   helm_values = [{
     minio = merge(
       {
-        mode          = var.mode ## other supported values are "standalone"
+        mode          = var.mode ## other supported values are standalone or distributed
         drivesPerNode = 2
         replicas      = var.replicas
         pools         = 2
