@@ -52,21 +52,13 @@ locals {
           }
         }
         consoleIngress = {
-          enabled = true
-          annotations = {
-            "cert-manager.io/cluster-issuer"                   = "${var.cluster_issuer}"
-            "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
-            "traefik.ingress.kubernetes.io/router.tls"         = "true"
-          }
-          hosts = [
-            local.domain,
-          ]
-          tls = [{
-            secretName = "minio-tls"
-            hosts = [
-              local.domain,
-            ]
-          }]
+          enabled = false
+        }
+        httproute = {
+          enabled           = true
+          host              = local.domain
+          gateway_name      = "istio-gateway"
+          gateway_namespace = "istio-ingress"
         }
         metrics = {
           serviceMonitor = {
