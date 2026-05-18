@@ -1,4 +1,4 @@
-{{- if and .Values.minio .Values.cluster_issuer .Values.minio.httproute (and .Values.minio.httproute.enabled .Values.minio.httproute.host) }}
+{{- if and .Values.minio .Values.minio.cluster_issuer .Values.minio.httproute (and .Values.minio.httproute.enabled .Values.minio.httproute.host) }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -8,7 +8,7 @@ metadata:
 spec:
   secretName: {{ .Release.Name }}-tls
   issuerRef:
-    name: {{ .Values.cluster_issuer }}
+    name: {{ .Values.minio.cluster_issuer }}
     kind: ClusterIssuer
   dnsNames:
     - {{ .Values.minio.httproute.host | quote }}
