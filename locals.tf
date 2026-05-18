@@ -57,8 +57,8 @@ locals {
         httproute = {
           enabled           = true
           host              = local.domain
-          gateway_name      = "istio-gateway"
-          gateway_namespace = "istio-ingress"
+          gateway_name      = var.gateway_name
+          gateway_namespace = var.gateway_namespace
         }
         metrics = {
           serviceMonitor = {
