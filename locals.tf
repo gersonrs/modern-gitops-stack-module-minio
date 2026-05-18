@@ -74,6 +74,7 @@ locals {
         users        = var.config_minio.users
         buckets      = var.config_minio.buckets
         policies     = var.config_minio.policies
+        cluster_issuer = var.cluster_issuer
       },
       local.oidc_config
     )
