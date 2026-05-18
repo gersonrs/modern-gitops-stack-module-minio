@@ -28,7 +28,7 @@ locals {
         clientSecret = var.oidc.client_secret
         claimName    = "policy"
         scopes       = "openid,profile,email"
-        redirectUri  = format("https://%s/oauth_callback", local.domain)
+        redirectUri  = format("%s://%s/oauth_callback", split("://", var.oidc.issuer_url)[0], local.domain)
         claimPrefix  = ""
         comment      = ""
       }
@@ -69,11 +69,11 @@ locals {
             public        = true
           }
         }
-        rootUser     = "root"
-        rootPassword = random_password.minio_root_secretkey.result
-        users        = var.config_minio.users
-        buckets      = var.config_minio.buckets
-        policies     = var.config_minio.policies
+        rootUser       = "root"
+        rootPassword   = random_password.minio_root_secretkey.result
+        users          = var.config_minio.users
+        buckets        = var.config_minio.buckets
+        policies       = var.config_minio.policies
         cluster_issuer = var.cluster_issuer
       },
       local.oidc_config
