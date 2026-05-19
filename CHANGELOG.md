@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.9.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.8.0...v2.9.0) (2026-05-19)
+
+
+### 🚀 New Features
+
+* add cert-manager Certificate template and pass cluster_issuer to chart values ([d053015](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/d0530152da7ff1b129486838441f1a860bdd59e1))
+* add gateway_name and gateway_namespace variables ([0f09e86](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/0f09e866987988315fd0988b1f5c9ca5c17248f8))
+* migrate from Traefik Ingress to Istio HTTPRoute (Gateway API) ([119fcbd](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/119fcbd9637f08436b85531b1ea75979983f3acc))
+* migrate to Istio HTTPRoute and add cert-manager Certificate ([dc11d8f](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/dc11d8f776f3f610ba87a7e8a39a85e579fef8de))
+* redirect HTTP to HTTPS via separate HTTPRoutes with sectionName ([6134422](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/6134422fc7f7605b03f8c9d51b5ac500e9f254c2))
+
+
+### 🔥 Bug Fixes
+
+* derive redirectUri scheme from oidc.issuer_url to support http for non-prod ([4a048b3](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/4a048b3fb063196e179e1735bf5a5467e3383355))
+* use .Values.minio.cluster_issuer in Certificate template condition ([57e9a0d](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/57e9a0df90b831afeb65bcccb8ab464519c19bd4))
+
+
+### ⌨️ Code Refactoring
+
+* simplify HTTPRoute to use sectionName https only ([58fc828](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/58fc8280656dfcba19e87e0dab4952f90467336c))
+
 ## [2.8.0](https://github.com/GersonRS/modern-gitops-stack-module-minio/compare/v2.7.0...v2.8.0) (2026-01-26)
 
 
