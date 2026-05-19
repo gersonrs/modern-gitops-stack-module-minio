@@ -28,7 +28,7 @@ locals {
         clientSecret = var.oidc.client_secret
         claimName    = "policy"
         scopes       = "openid,profile,email"
-        redirectUri  = format("https://%s/oauth_callback", local.domain)
+        redirectUri  = format("%s://%s/oauth_callback", split("://", var.oidc.issuer_url)[0], local.domain)
         claimPrefix  = ""
         comment      = ""
       }
@@ -52,21 +52,13 @@ locals {
           }
         }
         consoleIngress = {
-          enabled = true
-          annotations = {
-            "cert-manager.io/cluster-issuer"                   = "${var.cluster_issuer}"
-            "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
-            "traefik.ingress.kubernetes.io/router.tls"         = "true"
-          }
-          hosts = [
-            local.domain,
-          ]
-          tls = [{
-            secretName = "minio-tls"
-            hosts = [
-              local.domain,
-            ]
-          }]
+          enabled = false
+        }
+        httproute = {
+          enabled           = true
+          host              = local.domain
+          gateway_name      = var.gateway_name
+          gateway_namespace = var.gateway_namespace
         }
         metrics = {
           serviceMonitor = {
@@ -77,11 +69,12 @@ locals {
             public        = true
           }
         }
-        rootUser     = "root"
-        rootPassword = random_password.minio_root_secretkey.result
-        users        = var.config_minio.users
-        buckets      = var.config_minio.buckets
-        policies     = var.config_minio.policies
+        rootUser       = "root"
+        rootPassword   = random_password.minio_root_secretkey.result
+        users          = var.config_minio.users
+        buckets        = var.config_minio.buckets
+        policies       = var.config_minio.policies
+        cluster_issuer = var.cluster_issuer
       },
       local.oidc_config
     )
