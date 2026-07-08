@@ -40,7 +40,7 @@ variable "destination_cluster" {
 variable "target_revision" {
   description = "Override of target revision of the application chart."
   type        = string
-  default     = "v2.10.0" # x-release-please-version
+  default     = "v2.9.0" # x-release-please-version
 }
 
 variable "cluster_issuer" {
@@ -162,22 +162,4 @@ variable "gateway_namespace" {
   description = "Namespace where the Istio Gateway resource is deployed."
   type        = string
   default     = "istio-ingress"
-}
-
-variable "oidc_ca_source_secret_name" {
-  description = "Name of the source secret containing the CA cert used to validate OIDC issuer TLS."
-  type        = string
-  default     = "ca-key-pair"
-}
-
-variable "oidc_ca_source_secret_namespace" {
-  description = "Namespace of the source secret containing the CA cert used to validate OIDC issuer TLS."
-  type        = string
-  default     = "cert-manager"
-}
-
-variable "oidc_ca_secret_name" {
-  description = "Name of the secret created in the MinIO namespace with the OIDC CA certificate."
-  type        = string
-  default     = "minio-oidc-ca"
 }

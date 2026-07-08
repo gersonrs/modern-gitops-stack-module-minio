@@ -1,13 +1,5 @@
 # Changelog
 
-## [2.10.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.9.0...v2.10.0) (2026-07-07)
-
-
-### 🚀 New Features
-
-* remove redundant certificate ([37615ac](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/37615accc65416c08a7f1396c6cc1d5bb4c149c7))
-* remove redundant certificate ([19f38f2](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/19f38f28b8ea807b8cca943ab8bdcaafebbd0005))
-
 ## [2.9.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.8.0...v2.9.0) (2026-05-19)
 
 
