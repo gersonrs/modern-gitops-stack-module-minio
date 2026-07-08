@@ -1,19 +1,19 @@
 locals {
   domain = "minio.${var.subdomain != "" ? "${trimprefix(var.subdomain, ".")}." : ""}${var.base_domain}"
 
-  self_signed_cert = {
+  oidc_custom_ca = {
     extraVolumeMounts = [
       {
-        name      = "certificate"
-        mountPath = format("/etc/ssl/certs/%s", var.cluster_issuer == "letsencrypt-staging" ? "tls.crt" : "ca.crt")
-        subPath   = var.cluster_issuer == "letsencrypt-staging" ? "tls.crt" : "ca.crt"
+        name      = "oidc-ca"
+        mountPath = "/etc/ssl/certs/ca.crt"
+        subPath   = "ca.crt"
       },
     ]
     extraVolumes = [
       {
-        name = "certificate"
+        name = "oidc-ca"
         secret = {
-          secretName = "minio-tls"
+          secretName = var.oidc_ca_secret_name
         }
       }
     ]
@@ -33,7 +33,7 @@ locals {
         comment      = ""
       }
     },
-    var.cluster_issuer != "letsencrypt-prod" ? local.self_signed_cert : null
+    var.cluster_issuer != "letsencrypt-prod" ? local.oidc_custom_ca : null
   ) : null
 
   helm_values = [{
