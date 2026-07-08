@@ -7,6 +7,32 @@ resource "random_password" "minio_root_secretkey" {
   special = false
 }
 
+locals {
+  oidc_needs_custom_ca = var.oidc != null && var.cluster_issuer != "letsencrypt-prod"
+}
+
+data "kubernetes_secret_v1" "oidc_ca_source" {
+  count = local.oidc_needs_custom_ca ? 1 : 0
+
+  metadata {
+    name      = var.oidc_ca_source_secret_name
+    namespace = var.oidc_ca_source_secret_namespace
+  }
+}
+
+resource "kubernetes_secret_v1" "oidc_ca" {
+  count = local.oidc_needs_custom_ca ? 1 : 0
+
+  metadata {
+    name      = var.oidc_ca_secret_name
+    namespace = "minio"
+  }
+
+  data = {
+    "ca.crt" = data.kubernetes_secret_v1.oidc_ca_source[0].data["tls.crt"]
+  }
+}
+
 resource "argocd_project" "this" {
   count = var.argocd_project == null ? 1 : 0
 
@@ -101,6 +127,7 @@ resource "argocd_application" "this" {
 
   depends_on = [
     resource.null_resource.dependencies,
+    resource.kubernetes_secret_v1.oidc_ca,
   ]
 }
 
