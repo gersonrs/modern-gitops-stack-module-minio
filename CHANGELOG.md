@@ -1,5 +1,31 @@
 # Changelog
 
+## [2.10.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.9.0...v2.10.0) (2026-07-08)
+
+
+### 🚀 New Features
+
+* remove redundant certificate ([37615ac](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/37615accc65416c08a7f1396c6cc1d5bb4c149c7))
+* remove redundant certificate ([19f38f2](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/19f38f28b8ea807b8cca943ab8bdcaafebbd0005))
+
+
+### 🔥 Bug Fixes
+
+* restore minio oidc trust with internal ca secret ([9e4c2a7](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/9e4c2a75427e0dd1020483a8ecd1abb9575cadfd))
+* restore minio OIDC trust with internal CA secret ([e2cc447](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/e2cc4474f873d58adcf05933b4e083197ccb94b1))
+
+
+### 📚 Documentation
+
+* **terraform-docs:** gerar docs e escrever no README.adoc ([0b86817](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/0b86817e4f8dcb04a13f548a5def3b79bfd66f0c))
+
+
+### ⚙️ Chores
+
+* release 2.10.0 ([9bb3d22](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/9bb3d22e88b578b9e6502156bf8837d261ee38ce))
+* release 2.10.0 ([d30e227](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/d30e227164f4fae92b3a3febce482f4b6c2cb4d5))
+* rollback main to v2.9.0 ([6f72c90](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/6f72c905513a869f7a941584d3cf139e4e73dbdf))
+
 ## [2.9.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.8.0...v2.9.0) (2026-05-19)
 
 
