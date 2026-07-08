@@ -163,21 +163,3 @@ variable "gateway_namespace" {
   type        = string
   default     = "istio-ingress"
 }
-
-variable "oidc_ca_source_secret_name" {
-  description = "Name of the source secret containing the CA cert used to validate OIDC issuer TLS."
-  type        = string
-  default     = "ca-key-pair"
-}
-
-variable "oidc_ca_source_secret_namespace" {
-  description = "Namespace of the source secret containing the CA cert used to validate OIDC issuer TLS."
-  type        = string
-  default     = "cert-manager"
-}
-
-variable "oidc_ca_secret_name" {
-  description = "Name of the secret created in the MinIO namespace with the OIDC CA certificate."
-  type        = string
-  default     = "minio-oidc-ca"
-}
