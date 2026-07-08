@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.11.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.10.0...v2.11.0) (2026-07-08)
+
+
+### 🚀 New Features
+
+* adjust somethings ([d7990e8](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/d7990e85847ef0d57e98881e22801161fe3a3906))
+* adjust somethings ([d7f2766](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/d7f2766a0f699400fef230877ff85680162a3f25))
+
 ## [2.10.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.9.0...v2.10.0) (2026-07-08)
 
 
