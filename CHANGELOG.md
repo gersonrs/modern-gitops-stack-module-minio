@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.12.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.11.0...v2.12.0) (2026-08-10)
+
+
+### 🚀 New Features
+
+* add api route ([932d8a1](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/932d8a18932ebaa741700da8e1accfe7489d362b))
+* add api route ([2a1d8d1](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/2a1d8d1b0af45ad91090d3e30e5a9fa3686e7a2e))
+
 ## [2.11.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.10.0...v2.11.0) (2026-07-08)
 
 
