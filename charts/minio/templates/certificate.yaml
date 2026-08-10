@@ -12,4 +12,7 @@ spec:
     kind: ClusterIssuer
   dnsNames:
     - {{ .Values.minio.httproute.host | quote }}
+{{- if .Values.minio.httproute.api_host }}
+    - {{ .Values.minio.httproute.api_host | quote }}
+{{- end }}
 {{- end }}
