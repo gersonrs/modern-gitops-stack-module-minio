@@ -1,6 +1,8 @@
 locals {
   domain = "minio.${var.subdomain != "" ? "${trimprefix(var.subdomain, ".")}." : ""}${var.base_domain}"
 
+  api_domain = "minio-api.${var.subdomain != "" ? "${trimprefix(var.subdomain, ".")}." : ""}${var.base_domain}"
+
   self_signed_cert = {
     extraVolumeMounts = [
       {
@@ -57,6 +59,7 @@ locals {
         httproute = {
           enabled           = true
           host              = local.domain
+          api_host          = local.api_domain
           gateway_name      = var.gateway_name
           gateway_namespace = var.gateway_namespace
         }
