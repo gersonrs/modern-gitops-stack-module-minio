@@ -1,16 +1,18 @@
 = modern-gitops-stack-module-minio
 // Document attributes to replace along the document
-:minio-chart-version: 5.4.0
-:original-repo-url: https://github.com/minio/minio/tree/master/helm/minio
+:minio-chart-version: 17.0.21
+:original-repo-url: https://github.com/bitnami/charts/tree/main/bitnami/minio
 
 A https://modern-gitops-stack.io[Modern GitOps Stack] module to deploy https://min.io/[MinIO].
 
-The MinIO chart used by this module is shipped in this repository as well, in order to avoid any unwanted behaviors caused by unsupported versions. 
+The MinIO chart used by this module is shipped in this repository as well, in order to avoid any unwanted behaviors caused by unsupported versions.
+
+NOTE: The original community chart (`minio/minio`) was archived and its container images (`quay.io/minio/minio`) are no longer publicly pullable (HTTP 401). This module now uses the https://artifacthub.io/packages/helm/bitnami/minio[Bitnami chart] with images pulled from the `bitnamilegacy` mirror (`docker.io/bitnamilegacy/*`), which is the only publicly reachable source of the same Bitnami builds. The MinIO API service, root user, buckets/users/policies provisioning and OIDC login behave as before; the Console service now listens on port `9090` (was `9001`).
 
 [cols="1,1,1",options="autowidth,header"]
 |===
 |Current Chart Version |Original Repository |Default Values
-|*{minio-chart-version}* |{original-repo-url}[Chart] |https://artifacthub.io/packages/helm/minio-official/minio/{minio-chart-version}?modal=values[`values.yaml`]
+|*{minio-chart-version}* |{original-repo-url}[Chart] |https://artifacthub.io/packages/helm/bitnami/minio/{minio-chart-version}?modal=values[`values.yaml`]
 |===
 
 == Usage
@@ -110,7 +112,9 @@ TIP: Check the KinD deployment xref:ROOT:ROOT:tutorials/deploy_kind.adoc[tutoria
 
 === WebUI Login
 
-This module is configured to used OIDC out-of-the-box, as long as the proper configuration is passed. You can check the https://min.io/docs/minio/linux/operations/external-iam/configure-keycloak-identity-management.html[official documentation] page to get more information about the way this is configured.
+This module is configured to use OIDC out-of-the-box, as long as the proper configuration is passed. You can check the https://min.io/docs/minio/linux/operations/external-iam/configure-keycloak-identity-management.html[official documentation] page to get more information about the way this is configured.
+
+NOTE: The Bitnami chart does not have a dedicated OIDC section, so this module configures OIDC through the standard `MINIO_IDENTITY_OPENID_*` environment variables (the same mechanism the MinIO server documents). The user is expected to log in to the Console using the configured corporate identity provider; the root user remains available for administration.
 
 NOTE: The OIDC will not work with the `selfsigned-issuer` cluster issuer, which is the one deployed by default by the cert-manager module. You are required to use the `ca-issuer` or any of the Let's Encrypt issuers if you want to login to the MinIO Console using OIDC.
 

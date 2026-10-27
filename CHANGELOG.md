@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.13.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.12.0...v2.13.0) (2026-10-27)
+
+
+### 🚀 New Features
+
+* migrate MinIO chart from the archived `minio/minio` community chart to the Bitnami chart (`bitnamicharts/minio` 17.0.21), using images from the `bitnamilegacy` mirror (`docker.io/bitnamilegacy/*`) since the upstream `quay.io/minio/*` images are no longer publicly pullable (HTTP 401) ([chart](https://artifacthub.io/packages/helm/bitnami/minio/17.0.21))
+* preserve OIDC login by exposing the same `MINIO_IDENTITY_OPENID_*` environment variables through `extraEnvVars` (the Bitnami chart has no native OIDC section)
+* map `config_minio` (policies, users, buckets) to the Bitnami `provisioning` section, keeping policies at `Effect: Allow` and applying bucket anonymous policies via `mc anonymous set`
+* move the MinIO Console service port from 9001 to 9090 (Bitnami default) and update the HTTPRoute backend accordingly
+* enable the `volumePermissions` init container so the non-root MinIO server can write to persistent volumes
+
+### 🔥 Bug Fixes
+
+* stop using the `docker.io/bitnami/*` images, which return HTTP 404, in favor of `docker.io/bitnamilegacy/*`
+* keep the MinIO API endpoint (`minio.minio:9000`) and root user (`root`) unchanged for existing consumers
+
 ## [2.9.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.8.0...v2.9.0) (2026-05-19)
 
 
