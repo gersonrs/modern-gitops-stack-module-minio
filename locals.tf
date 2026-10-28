@@ -29,10 +29,33 @@ locals {
     }
   }
 
+  # Mount the cert-manager CA (issued by templates/certificate.yaml as the
+  # `minio-tls` secret) into the server so Go trusts it for outbound HTTPS.
+  # This is required for the OIDC discovery document served by the identity
+  # provider over HTTPS with a self-signed/corporate CA. The `minio-tls` secret
+  # already carries the ca.crt key, so no extra secret is needed.
+  self_signed_cert = {
+    extraVolumeMounts = [
+      {
+        name      = "certificate"
+        mountPath = format("/etc/ssl/certs/%s", var.cluster_issuer == "letsencrypt-staging" ? "tls.crt" : "ca.crt")
+        subPath   = var.cluster_issuer == "letsencrypt-staging" ? "tls.crt" : "ca.crt"
+      },
+    ]
+    extraVolumes = [
+      {
+        name = "certificate"
+        secret = {
+          secretName = "minio-tls"
+        }
+      }
+    ]
+  }
+
   # MinIO reads the OIDC provider configuration from MINIO_IDENTITY_OPENID_*
-  # environment variables. `trustedCertsSecret` makes the server trust the
-  # cert-manager CA that signs the OIDC provider (Keycloak) certificate, so the
-  # HTTPS discovery document can be fetched.
+  # environment variables. The CA mounted by `self_signed_cert` makes the
+  # server trust the cert-manager CA that signs the OIDC provider (Keycloak)
+  # certificate, so the HTTPS discovery document can be fetched.
   oidc_config = var.oidc != null ? {
     enabled      = true
     configUrl    = "${var.oidc.issuer_url}/.well-known/openid-configuration"
@@ -97,9 +120,6 @@ locals {
         minioConsolePort = "9090"
         oidc             = local.oidc_config
         environment      = local.oidc_config != null ? { MINIO_BROWSER = "on" } : {}
-        # The chart mounts `trustedCertsSecret` under certsPath and MinIO trusts
-        # every CA bundle found there for outbound HTTPS (OIDC discovery).
-        trustedCertsSecret = local.oidc_config != null && var.cluster_issuer != "letsencrypt-prod" ? "minio-tls" : ""
         service = {
           type = "ClusterIP"
           port = "9000"
@@ -122,7 +142,14 @@ locals {
         policies = local.provisioning_config.policies
         users    = local.provisioning_config.users
         buckets  = local.provisioning_config.buckets
-      }
+        # Consumed by templates/certificate.yaml to issue the TLS secret that
+        # both the gateway HTTPRoutes and the MinIO CA mount use.
+        cluster_issuer = var.cluster_issuer
+      },
+      local.oidc_config != null && var.cluster_issuer != "letsencrypt-prod" ? {
+        extraVolumeMounts = local.self_signed_cert.extraVolumeMounts
+        extraVolumes      = local.self_signed_cert.extraVolumes
+      } : null
     )
   }]
 }

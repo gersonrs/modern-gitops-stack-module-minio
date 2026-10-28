@@ -154,7 +154,7 @@ This module is configured to use OIDC out-of-the-box, as long as the proper conf
 
 The chart has a native `oidc` section, which the module fills with the `MINIO_IDENTITY_OPENID_*` settings. The web UI is the Console embedded in the MinIO server (exposed on port `9090` through the console service/HTTPRoute) because it is the only surface that renders the SSO button. The user is expected to log in with the configured corporate identity provider; the root user remains available for administration.
 
-NOTE: The `trustedCertsSecret` value points the server at the `minio-tls` secret so MinIO trusts the cert-manager CA that signs the identity provider certificate. Without it, the HTTPS OIDC discovery fails with `x509: certificate signed by unknown authority` and the login falls back to the username/password form.
+NOTE: The module mounts the `minio-tls` secret (issued by `templates/certificate.yaml`) into the server through `extraVolumes`/`extraVolumeMounts`, so MinIO trusts the cert-manager CA that signs the identity provider certificate. Without it, the HTTPS OIDC discovery fails with `x509: certificate signed by unknown authority` and the login falls back to the username/password form.
 
 NOTE: The OIDC will not work with the `selfsigned-issuer` cluster issuer, which is the one deployed by default by the cert-manager module. You are required to use the `ca-issuer` or any of the Let's Encrypt issuers if you want to login to the MinIO Console using OIDC.
 
