@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.14.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.13.1...v2.14.0) (2026-10-28)
+
+
+### 🚀 New Features
+
+* revert to the upstream community chart (`charts.min.io`, v5.4.0) so the MinIO Console is the one embedded in the server, restoring the OIDC/SSO login button. The Bitnami chart ships the Console as a separate deployment which never renders the SSO button.
+* run images built from the upstream source (`gersonrs/minio:2025.4.22` and `gersonrs/mc:2024.11.21`) because `quay.io/minio/*` is no longer publicly pullable (HTTP 401) and the `dl.min.io` release binaries are gone (HTTP 410). The tag is pinned to `RELEASE.2025-04-22T22-12-26Z`, the last release embedding Console v1.7.6 with SSO support (v1.7.7+ removed it).
+* trust the cert-manager CA for OIDC discovery through the chart `trustedCertsSecret` (`minio-tls`), so the HTTPS discovery document from the identity provider is accepted.
+* keep `config_minio` (policies, users, buckets) mapped to the chart native `policies`, `users` and `buckets` provisioning sections.
+
 ## [2.13.1](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.13.0...v2.13.1) (2026-10-27)
 
 
