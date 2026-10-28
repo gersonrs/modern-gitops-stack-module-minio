@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.1](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.13.0...v2.13.1) (2026-10-27)
+
+
+### 🔥 Bug Fixes
+
+* remove the `istio.io/dataplane-mode: ambient` label from the MinIO namespace by default. The ambient ztunnel redirect breaks the MinIO provisioning job and the Console-to-server connection (connection reset). Expose MinIO through Istio HTTPRoutes instead of joining the ambient mesh.
+
 ## [2.13.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.12.0...v2.13.0) (2026-10-27)
 
 
