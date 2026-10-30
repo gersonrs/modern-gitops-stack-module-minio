@@ -1,5 +1,38 @@
 # Changelog
 
+## [2.14.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.13.1...v2.14.0) (2026-10-28)
+
+
+### 🚀 New Features
+
+* revert to the upstream community chart (`charts.min.io`, v5.4.0) so the MinIO Console is the one embedded in the server, restoring the OIDC/SSO login button. The Bitnami chart ships the Console as a separate deployment which never renders the SSO button.
+* run images built from the upstream source (`gersonrs/minio:2025.4.22` and `gersonrs/mc:2024.11.21`) because `quay.io/minio/*` is no longer publicly pullable (HTTP 401) and the `dl.min.io` release binaries are gone (HTTP 410). The tag is pinned to `RELEASE.2025-04-22T22-12-26Z`, the last release embedding Console v1.7.6 with SSO support (v1.7.7+ removed it).
+* trust the cert-manager CA for OIDC discovery through the chart `trustedCertsSecret` (`minio-tls`), so the HTTPS discovery document from the identity provider is accepted.
+* keep `config_minio` (policies, users, buckets) mapped to the chart native `policies`, `users` and `buckets` provisioning sections.
+
+## [2.13.1](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.13.0...v2.13.1) (2026-10-27)
+
+
+### 🔥 Bug Fixes
+
+* remove the `istio.io/dataplane-mode: ambient` label from the MinIO namespace by default. The ambient ztunnel redirect breaks the MinIO provisioning job and the Console-to-server connection (connection reset). Expose MinIO through Istio HTTPRoutes instead of joining the ambient mesh.
+
+## [2.13.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.12.0...v2.13.0) (2026-10-27)
+
+
+### 🚀 New Features
+
+* migrate MinIO chart from the archived `minio/minio` community chart to the Bitnami chart (`bitnamicharts/minio` 17.0.21), using images from the `bitnamilegacy` mirror (`docker.io/bitnamilegacy/*`) since the upstream `quay.io/minio/*` images are no longer publicly pullable (HTTP 401) ([chart](https://artifacthub.io/packages/helm/bitnami/minio/17.0.21))
+* preserve OIDC login by exposing the same `MINIO_IDENTITY_OPENID_*` environment variables through `extraEnvVars` (the Bitnami chart has no native OIDC section)
+* map `config_minio` (policies, users, buckets) to the Bitnami `provisioning` section, keeping policies at `Effect: Allow` and applying bucket anonymous policies via `mc anonymous set`
+* move the MinIO Console service port from 9001 to 9090 (Bitnami default) and update the HTTPRoute backend accordingly
+* enable the `volumePermissions` init container so the non-root MinIO server can write to persistent volumes
+
+### 🔥 Bug Fixes
+
+* stop using the `docker.io/bitnami/*` images, which return HTTP 404, in favor of `docker.io/bitnamilegacy/*`
+* keep the MinIO API endpoint (`minio.minio:9000`) and root user (`root`) unchanged for existing consumers
+
 ## [2.12.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.11.0...v2.12.0) (2026-08-10)
 
 

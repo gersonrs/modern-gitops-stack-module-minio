@@ -14,7 +14,7 @@ spec:
   rules:
     - backendRefs:
         - name: {{ .Release.Name }}-console
-          port: 9001
+          port: 9090
 {{- end }}
 {{- if and .Values.minio.httproute.enabled .Values.minio.httproute.api_host }}
 ---

@@ -40,7 +40,7 @@ variable "destination_cluster" {
 variable "target_revision" {
   description = "Override of target revision of the application chart."
   type        = string
-  default     = "v2.12.0" # x-release-please-version
+  default     = "v2.14.0" # x-release-please-version
 }
 
 variable "cluster_issuer" {
@@ -88,11 +88,9 @@ variable "dependency_ids" {
 }
 
 variable "namespace_labels" {
-  description = "Labels to apply to the destination namespace managed by Argo CD (requires CreateNamespace=true)."
+  description = "Labels to apply to the destination namespace managed by Argo CD (requires CreateNamespace=true). Defaults to an empty map: the MinIO Console/API are exposed through Istio HTTPRoutes and the internal MinIO traffic must not be captured by the ambient mesh (the ztunnel redirect breaks the provisioning job and the Console-to-server connection)."
   type        = map(string)
-  default = {
-    "istio.io/dataplane-mode" = "ambient"
-  }
+  default     = {}
 }
 
 #######################
