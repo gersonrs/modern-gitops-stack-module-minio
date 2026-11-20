@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.14.0...v3.0.0) (2026-11-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* provider major bumps and a stricter Terraform baseline; consumers must run `terraform init -upgrade`.
+
+### 🚀 New Features
+
+* upgrade charts, providers and Terraform baseline ([#33](https://github.com/gersonrs/modern-gitops-stack-module-minio/issues/33)) ([2b960fa](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/2b960fa3d1fbb8a5d70afd4145fa05b50898c590))
+
 ## [2.14.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.13.1...v2.14.0) (2026-10-28)
 
 
