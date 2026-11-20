@@ -175,25 +175,27 @@ In order to have the ability to login using OIDC.
 
 The following requirements are needed by this module:
 
-- [[requirement_argocd]] <<requirement_argocd,argocd>> (>= 6)
+- [[requirement_terraform]] <<requirement_terraform,terraform>> (>= 1.9.0)
 
-- [[requirement_null]] <<requirement_null,null>> (>= 3)
+- [[requirement_argocd]] <<requirement_argocd,argocd>> (~> 7.18)
 
-- [[requirement_random]] <<requirement_random,random>> (>= 3)
+- [[requirement_null]] <<requirement_null,null>> (~> 3.3)
 
-- [[requirement_utils]] <<requirement_utils,utils>> (>= 1)
+- [[requirement_random]] <<requirement_random,random>> (~> 3.9)
+
+- [[requirement_utils]] <<requirement_utils,utils>> (~> 2.7)
 
 === Providers
 
 The following providers are used by this module:
 
-- [[provider_random]] <<provider_random,random>> (>= 3)
+- [[provider_null]] <<provider_null,null>> (3.3.2)
 
-- [[provider_argocd]] <<provider_argocd,argocd>> (>= 6)
+- [[provider_random]] <<provider_random,random>> (3.9.1)
 
-- [[provider_utils]] <<provider_utils,utils>> (>= 1)
+- [[provider_argocd]] <<provider_argocd,argocd>> (7.18.0)
 
-- [[provider_null]] <<provider_null,null>> (>= 3)
+- [[provider_utils]] <<provider_utils,utils>> (2.7.0)
 
 === Resources
 
@@ -264,7 +266,7 @@ Description: Override of target revision of the application chart.
 
 Type: `string`
 
-Default: `"v2.12.0"`
+Default: `"v2.14.0"`
 
 ==== [[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
 
@@ -332,17 +334,11 @@ Default: `{}`
 
 ==== [[input_namespace_labels]] <<input_namespace_labels,namespace_labels>>
 
-Description: Labels to apply to the destination namespace managed by Argo CD (requires CreateNamespace=true).
+Description: Labels to apply to the destination namespace managed by Argo CD (requires CreateNamespace=true). Defaults to an empty map: the MinIO Console/API are exposed through Istio HTTPRoutes and the internal MinIO traffic must not be captured by the ambient mesh (the ztunnel redirect breaks the provisioning job and the Console-to-server connection).
 
 Type: `map(string)`
 
-Default:
-[source,json]
-----
-{
-  "istio.io/dataplane-mode": "ambient"
-}
-----
+Default: `{}`
 
 ==== [[input_mode]] <<input_mode,mode>>
 
@@ -456,10 +452,11 @@ Description: The MinIO root user password.
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[requirement_argocd]] <<requirement_argocd,argocd>> |>= 6
-|[[requirement_null]] <<requirement_null,null>> |>= 3
-|[[requirement_random]] <<requirement_random,random>> |>= 3
-|[[requirement_utils]] <<requirement_utils,utils>> |>= 1
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 1.9.0
+|[[requirement_argocd]] <<requirement_argocd,argocd>> |~> 7.18
+|[[requirement_null]] <<requirement_null,null>> |~> 3.3
+|[[requirement_random]] <<requirement_random,random>> |~> 3.9
+|[[requirement_utils]] <<requirement_utils,utils>> |~> 2.7
 |===
 
 = Providers
@@ -467,10 +464,10 @@ Description: The MinIO root user password.
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[provider_null]] <<provider_null,null>> |>= 3
-|[[provider_random]] <<provider_random,random>> |>= 3
-|[[provider_argocd]] <<provider_argocd,argocd>> |>= 6
-|[[provider_utils]] <<provider_utils,utils>> |>= 1
+|[[provider_null]] <<provider_null,null>> |3.3.2
+|[[provider_random]] <<provider_random,random>> |3.9.1
+|[[provider_argocd]] <<provider_argocd,argocd>> |7.18.0
+|[[provider_utils]] <<provider_utils,utils>> |2.7.0
 |===
 
 = Resources
@@ -530,7 +527,7 @@ Description: The MinIO root user password.
 |[[input_target_revision]] <<input_target_revision,target_revision>>
 |Override of target revision of the application chart.
 |`string`
-|`"v2.12.0"`
+|`"v2.14.0"`
 |no
 
 |[[input_cluster_issuer]] <<input_cluster_issuer,cluster_issuer>>
@@ -590,17 +587,9 @@ object({
 |no
 
 |[[input_namespace_labels]] <<input_namespace_labels,namespace_labels>>
-|Labels to apply to the destination namespace managed by Argo CD (requires CreateNamespace=true).
+|Labels to apply to the destination namespace managed by Argo CD (requires CreateNamespace=true). Defaults to an empty map: the MinIO Console/API are exposed through Istio HTTPRoutes and the internal MinIO traffic must not be captured by the ambient mesh (the ztunnel redirect breaks the provisioning job and the Console-to-server connection).
 |`map(string)`
-|
-
-[source]
-----
-{
-  "istio.io/dataplane-mode": "ambient"
-}
-----
-
+|`{}`
 |no
 
 |[[input_mode]] <<input_mode,mode>>
