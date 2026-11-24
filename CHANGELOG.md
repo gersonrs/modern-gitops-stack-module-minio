@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v3.0.0...v3.0.1) (2026-11-24)
+
+
+### 📚 Documentation
+
+* add usage and dependencies to the module documentation ([#35](https://github.com/gersonrs/modern-gitops-stack-module-minio/issues/35)) ([abb0110](https://github.com/gersonrs/modern-gitops-stack-module-minio/commit/abb0110b43ae4586810915770eab060c85bed784))
+
 ## [3.0.0](https://github.com/gersonrs/modern-gitops-stack-module-minio/compare/v2.14.0...v3.0.0) (2026-11-20)
 
 
